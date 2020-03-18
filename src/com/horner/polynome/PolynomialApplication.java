@@ -5,6 +5,9 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * @author Pascal David, 2020-03-18
+ */
 public class PolynomialApplication {
 	public enum Coefficients {
 	    RANGE_COEFFICIENT, 
