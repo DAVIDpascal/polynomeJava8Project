@@ -36,9 +36,7 @@ public class HornerPolynomial {
 		
 		// Reverse Coefficients List
 		Collections.reverse(coefficients);
-		/*coefficients = coefficients.stream()
-	                               .sorted(Collections.reverseOrder())
-	                               .collect(Collectors.toList());*/
+		
 		// Retrieve first value
 		Double accumulator = coefficients.get(0).doubleValue();
 		
