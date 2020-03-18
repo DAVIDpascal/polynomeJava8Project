@@ -34,10 +34,11 @@ public class HornerPolynomial {
 		// Convert Array to a List
 		List<Number> coefficients = Arrays.stream(this.numberCoefficientsArray).collect(Collectors.toList());
 		
-		// Reverse Coefficients Order List
-		coefficients = coefficients.stream()
+		// Reverse Coefficients List
+		Collections.reverse(coefficients);
+		/*coefficients = coefficients.stream()
 	                               .sorted(Collections.reverseOrder())
-	                               .collect(Collectors.toList());
+	                               .collect(Collectors.toList());*/
 		// Retrieve first value
 		Double accumulator = coefficients.get(0).doubleValue();
 		
