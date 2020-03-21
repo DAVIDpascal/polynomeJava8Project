@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -43,19 +43,16 @@ public class HornerPolynomial {
 		// Convert List to Array
 		this.numberCoefficientsArray = coefficients.stream().toArray(Number[]::new);
 	    
-		// Generate new list excluding first member 
-	    coefficients = IntStream
-	    	      .range(1, this.numberCoefficientsArray.length)
-	    	      .mapToObj(i -> this.numberCoefficientsArray[i])
-	    	      .collect(Collectors.toList());
+		// Create atomic reference on accumulator variable
+		AtomicReference<Double> atomicAccumulator = new AtomicReference<>(accumulator);
 	    
-	    // Loop through coefficients list 
-	    for (Number coefficient : coefficients) {
-            accumulator = (accumulator * value) + coefficient.doubleValue();
-        }
-	    
+		IntStream
+	    .range(1, this.numberCoefficientsArray.length)
+	    .mapToObj(i -> this.numberCoefficientsArray[i])
+	    .forEach(e -> atomicAccumulator.accumulateAndGet(e.doubleValue(),(u, v) -> (u * value) + v));
+	   	    
 	    // Store results into a Map
-		mapResults.put(value, accumulator);
+		mapResults.put(value, atomicAccumulator.get());
 	}
 	
 	protected void runProcess(final List<? extends Number> coefficientsList, final Coefficients coefficients) {
